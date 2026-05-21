@@ -1,36 +1,49 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# MEDXPRESS — Web App (web2)
 
-## Getting Started
+The desktop-first, animation-rich web version of MEDXPRESS. While `mobile/`
+feels like a native mobile app (bottom tabs, FAB), this build is designed for
+the web: a marketing landing page, sidebar dashboards, multi-column layouts,
+scroll animations and image-rich sections.
 
-First, run the development server:
+Built with **Next.js 16 (App Router)**, **Tailwind CSS v4**, **Redux Toolkit**,
+**Motion** (Framer Motion) for animations, and **next-themes** for light/dark
+mode. Frontend only, running on mock data in `src/lib/data.ts`.
+
+## Getting started
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm install
+npm run dev      # http://localhost:3000
+npm run build    # production build
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## What is inside
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- **Landing page (`/`)** — animated hero with aurora gradients and floating
+  cards, stat counters, feature bento grid, specialties, how-it-works,
+  doctor showcase, testimonials, FAQ accordion and a CTA band.
+- **Auth (`/login`, `/register`)** — split-screen layout with a brand panel,
+  role selector and inline validation.
+- **Patient app** — `/dashboard`, `/discover`, `/doctors/[id]` (two-column
+  profile with a sticky booking card), `/booking/[id]`, `/appointments`,
+  `/prescriptions`, `/profile`.
+- **Consultation (`/consultation/[id]`)** — full-screen video/chat room with a
+  prescription notepad.
+- **Doctor workspace** — `/doctor`, `/doctor/schedule`, `/doctor/patients`,
+  `/doctor/profile`.
+- **Admin panel** — `/admin`, `/admin/doctors`, `/admin/users`,
+  `/admin/analytics`.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Logged-in areas use a collapsible sidebar shell; the landing uses a scroll-aware
+top navbar. Light and dark mode supported throughout.
 
-## Learn More
+## Demo accounts
 
-To learn more about Next.js, take a look at the following resources:
+The login screen has one-tap Patient / Doctor / Admin demo buttons, or sign in
+with any valid email and a 6+ character password after choosing a role.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Design tokens
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Brand colours are defined in `src/app/globals.css`: Sky Blue `#38B6FF`, Medical
+Red `#E84040`, Navy `#0D1B2A`, plus a Violet accent `#7C6CFF` for the richer
+web visuals.
