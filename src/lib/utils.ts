@@ -50,11 +50,27 @@ export function homeFor(role: string): string {
   return "/dashboard";
 }
 
-// Real portrait photos of Black / African people, hand-picked by visual
-// review from the randomuser.me portrait set (reliable, always-on URLs).
-// Values are portrait indexes; gender is inferred from the person's name.
-const FACES_WOMEN = [16, 36, 62, 69, 92];
-const FACES_MEN = [16, 25, 53, 54, 59, 80, 83, 91];
+// Verified, full-resolution photographs of Black / African people, each one
+// hand-checked by visual review. "p:N" = a pravatar portrait; "u:ID" = an
+// Unsplash photo. Both sources serve sharp images. Gender is inferred from
+// the person's name so portraits roughly match.
+const FACES_MEN = [
+  "p:7",
+  "p:17",
+  "p:18",
+  "p:51",
+  "u:1506277886164-e25aa3f4ef7f",
+  "u:1666214280557-f1b5022eb634",
+  "u:1622253692010-333f2da6031d",
+  "u:1633332755192-727a05c4013d",
+];
+
+const FACES_WOMEN = [
+  "p:16",
+  "p:38",
+  "p:41",
+  "u:1531123897727-8f129e1688ce",
+];
 
 const FEMALE_NAMES = new Set([
   "adaeze", "fatima", "chidinma", "aisha", "amara", "grace", "ngozi",
@@ -67,14 +83,20 @@ function seedHash(value: string): number {
   return Math.abs(h);
 }
 
-/** A real, reliably-loading photo of a Black / African person, by name. */
+function faceUrl(token: string): string {
+  const size = 640;
+  if (token.startsWith("p:")) {
+    return `https://i.pravatar.cc/${size}?img=${token.slice(2)}`;
+  }
+  return `https://images.unsplash.com/photo-${token.slice(2)}?w=${size}&h=${size}&fit=crop&crop=faces&auto=format&q=80`;
+}
+
+/** A sharp, verified photo of a Black / African person, seeded by name. */
 export function personAvatar(seed: string): string {
   const first =
     seed.replace(/^dr\.?\s+/i, "").trim().split(/\s+/)[0]?.toLowerCase() ?? "";
-  const female = FEMALE_NAMES.has(first);
-  const pool = female ? FACES_WOMEN : FACES_MEN;
-  const n = pool[seedHash(seed) % pool.length];
-  return `https://randomuser.me/api/portraits/${female ? "women" : "men"}/${n}.jpg`;
+  const pool = FEMALE_NAMES.has(first) ? FACES_WOMEN : FACES_MEN;
+  return faceUrl(pool[seedHash(seed) % pool.length]);
 }
 
 /** Alias kept for cover and profile imagery. */
